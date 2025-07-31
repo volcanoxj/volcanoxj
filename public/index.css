@@ -1,0 +1,20 @@
+.rows {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.title {
+    background-color: darkcyan;
+    text-align: center;
+    margin: auto;
+    line-height: 24px;
+    display: inline;
+    flex: 0 0;
+    width: 100%;
+}
+
+.content {
+    scrollbar-width: thin;
+    scrollbar-color: darkcyan;
+    flex: 1 1;
+}

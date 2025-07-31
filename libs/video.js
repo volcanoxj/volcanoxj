@@ -26,24 +26,28 @@ async function index() {
 
 async function category(href) {
     let uri = `https://video.enlighten.org.tw/zh-tw/${href}/`;
-    let data = await fetch(uri, {cache: false});
+    let data = await fetch(uri, {cache: true});
     let $ = cheerio.load(data);
     let image = $('meta[property="og:image"]:last').attr('content');
     let items = [];
     $('div.enlighten-video-list').find('tr').each((_, tr) => {
         let article = {};
         $('td', tr).each((i, td) => {
-            switch(i) {
-            case 0: { article.index = $(td).text().trim(); } break;
-            case 1: {
-                let item = $('a:first', td);
-                article.uri = $(item).attr('href').replace(/^\/zh-tw\//, '');
-                article.title = $(item).text().trim();
+            switch($(td).attr('class')) {
+            case 'list-title': {
+                if (i == 0) {
+                    article.index = $(td).text().trim();
+                    break;
+                }
+                article.title = $(td).text().trim();
+                article.uri = $('a:first', td).attr('href').replace(/^\/zh-tw\//, '');
             } break;
-            case 2: {
+            case 'list-mp3': {
                 article.mp3 = $('a:first', td).attr('href');
             } break;
-            case 3: { article.author = $(td).text().trim(); } break;
+            case 'list-author': {
+                article.author = $(td).text().trim();
+            } break;
             }
         });
         items.push(article);
