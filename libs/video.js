@@ -89,6 +89,8 @@ async function snapshot() {
     return {title, items};
 }
 
+exports.snapshot = snapshot;
+
 if (require.main === module) {
     snapshot().then(console.log, console.error);
 }

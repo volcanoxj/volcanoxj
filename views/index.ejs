@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-tw" >
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>正覺教團</title>
     <link rel="stylesheet" type="text/css" href="/index.css" />
@@ -10,17 +10,108 @@
 <body class="rows">
     <div class="title">正覺教團</div>
     <div class="content">
-        <!-- 三级导航 -->
-        <div class="rows">
-            <div class="level1">弘法视频</div>
-            <!-- 二级导航 -->
-            <div class="rows">
-                <div class="level2">三乘菩提</div>
-                <div class="">
-                    <div class="level3"></div>
-                </div>
-            </div>
-        </div>
+        <section class="tree">
+            <details open>
+                <summary>弘法视频</summary>
+                <details close>
+                    <summary>三乘菩提</summary>
+                    <details close>
+                        <summary>學佛正知見(一)</summary>
+                        <li>三乘同聞大乘經典<span style="float: right"><button class="icon read" onclick="read('./a01/001.html')"/><button class="icon music" onclick="play('https://www.runoob.com/try/demo_source/horse.mp3')"/><button class="icon video" onclick="play('https://www.w3schools.com/html/mov_bbb.mp4')"/></span></li>
+                        <li>大乘非佛說的錯誤</li>
+                        <li>佛菩提之不共二乘</li>
+                        <li>一念無明與無始無明(上)</li>
+                        <li>一念無明與無始無明(下)</li>
+                    </details>
+                </details>
+                <details close>
+                    <summary>法義辨正</summary>
+                    <details close>
+                        <summary>明心與初地釋</summary>
+                        <li>明心與初地 釋第1節</li>
+                        <li>明心與初地 釋第2節</li>
+                        <li>明心與初地 釋第3節</li>
+                        <li>明心與初地 釋第4節</li>
+                        <li>明心與初地 釋第5節</li>
+                        <li>明心與初地 釋第6節</li>
+                    </details>
+                    <details close>
+                        <summary>宗門與教門</summary>
+                        <li>宗門與教門第1集</li>
+                        <li>宗門與教門第2集</li>
+                        <li>宗門與教門第3集</li>
+                        <li>宗門與教門第4集</li>
+                        <li>宗門與教門第5集</li>
+                        <li>宗門與教門第6集</li>
+                        <li>宗門與教門第7集</li>
+                        <li>宗門與教門第8集</li>
+                        <li>宗門與教門第9集</li>
+                        <li>宗門與教門第10集</li>
+                        <li>宗門與教門第11集</li>
+                        <li>宗門與教門第12集</li>
+                        <li>宗門與教門第13集</li>
+                        <li>宗門與教門第14集</li>
+                        <li>宗門與教門第15集</li>
+                        <li>宗門與教門第16集</li>
+                        <li>宗門與教門第17集</li>
+                        <li>宗門與教門第18集</li>
+                        <li>宗門與教門第19集</li>
+                        <li>宗門與教門第20集</li>
+                        <li>宗門與教門第21集</li>
+                    </details>
+                </details>
+            </details>
+        </section>
+    </div>
+    <div id="media-player" style="display:none; background-color: white; position: fixed; bottom: 0px; left:50%; transform: translateX(-50%);">
+        <audio id="music-player" controls></audio>
+        <video id="video-player" style="width: 100%; height: 100%;" controls></video>
+        <button id="close-button" class="icon close" style="position: fixed; top: 0px; right: 0px;" onclick="stop()"></button>
+        <script type="text/javascript">
+            var mediaPlayer = document.getElementById("media-player");
+            var musicPlayer = document.getElementById("music-player");
+            var videoPlayer = document.getElementById("video-player");
+            var closeButton = document.getElementById("close-button");
+            function stop() {
+                mediaPlayer.style.display = "none";
+                musicPlayer.pause();
+                musicPlayer.currentTime = 0;
+                videoPlayer.pause();
+                videoPlayer.currentTime = 0;
+            }
+            function read(uri) {
+                window.open(uri);
+            }
+            function play(uri) {
+                let isMusic = /\.(mp3|mpga|mid|midi)$/.test(uri);
+                if (!isMusic) {
+                    window.open(uri);
+                    return;
+                }
+                // 关闭
+                let ctrl0 = isMusic?videoPlayer:musicPlayer;
+                ctrl0.pause();
+                ctrl0.currentTime = 0;
+                ctrl0.style.display = "none";
+                // 播放
+                let ctrl = isMusic ? musicPlayer: videoPlayer;
+                ctrl.src = uri;
+                ctrl.play();
+                ctrl.style.display = "inline";
+                mediaPlayer.style.display = "inline";
+                if (!isMusic) {
+                    mediaPlayer.style.width = "100%";
+                    mediaPlayer.style.height = "100%";
+                    closeButton.style.top = "0px";
+                    closeButton.style.right = "0px";
+                } else {
+                    mediaPlayer.style.width = "auto";
+                    mediaPlayer.style.height = "auto";
+                    closeButton.style.top = "19px";
+                    closeButton.style.right = "-16px";
+                }
+            }
+        </script>
     </div>
 </body>
 </html>

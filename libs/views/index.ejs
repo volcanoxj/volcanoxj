@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-tw" >
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>正覺教團</title>
+    <link rel="stylesheet" type="text/css" href="./index.css" />
+    <script type="text/javascript" src="./index.js"></script>
+</head>
+<body class="rows">
+    <div class="title">正覺教團</div>
+    <div class="content">
+        <section class="tree">
+            <details open>
+                <summary>弘法视频</summary>
+                <% items.forEach(function(category) { %>
+                    <details close>
+                        <summary><%= category.title %></summary>
+                        <% category.items.forEach(function(book){%>
+                        <details close>
+                            <summary><%= book.title %></summary>
+                            <% book.items.forEach(function(article){%>
+                            <li style="display:flex;flex-flow: row nowrap;">
+                                <span style="float: left; flex-shrink: 0;"><%= article.index %>&nbsp;&nbsp;</span>
+                                <div style="flex-grow: 1; overflow: hidden;">
+                                    <div class="inline"><span class="revolve"><%= article.title %></span></div>
+                                </div>
+                                <span style="float: right; flex-shrink: 0;">
+                                    <% if(article.content) { %><button class="icon read" onclick="read('./<%= article.uri %>.html')"/><% } %>
+                                    <% if(article.mp3) { %><button class="icon music" onclick="play('<%= article.mp3 %>')"/><% } %>
+                                    <% if(article.video) { %><button class="icon video" onclick="play('<%= article.video %>')"/><% } %>
+                                </span>
+                            </li>
+                            <% }); %>
+                        </details>
+                        <% }); %>
+                    </details>
+                <% }); %>
+            </details>
+        </section>
+    </div>
+    <div id="media-player" style="display:none; background-color: white; position: fixed; bottom: 0px; left:50%; transform: translateX(-50%);">
+        <audio id="music-player" controls></audio>
+        <video id="video-player" style="width: 100%; height: 100%;" controls></video>
+        <button id="close-button" class="icon close" style="position: fixed; top: 0px; right: 0px;" onclick="stop()"></button>
+        <script type="text/javascript">
+            var mediaPlayer = document.getElementById("media-player");
+            var musicPlayer = document.getElementById("music-player");
+            var videoPlayer = document.getElementById("video-player");
+            var closeButton = document.getElementById("close-button");
+            function stop() {
+                mediaPlayer.style.display = "none";
+                musicPlayer.pause();
+                musicPlayer.currentTime = 0;
+                videoPlayer.pause();
+                videoPlayer.currentTime = 0;
+            }
+            function read(uri) {
+                window.open(uri);
+            }
+            function play(uri) {
+                let isMusic = /\.(mp3|mpga|mid|midi)$/.test(uri);
+                if (!isMusic) {
+                    window.open(uri);
+                    return;
+                }
+                // 关闭
+                let ctrl0 = isMusic?videoPlayer:musicPlayer;
+                ctrl0.pause();
+                ctrl0.currentTime = 0;
+                ctrl0.style.display = "none";
+                // 播放
+                let ctrl = isMusic ? musicPlayer: videoPlayer;
+                ctrl.src = uri;
+                ctrl.play();
+                ctrl.style.display = "inline";
+                mediaPlayer.style.display = "inline";
+                if (!isMusic) {
+                    mediaPlayer.style.width = "100%";
+                    mediaPlayer.style.height = "100%";
+                    closeButton.style.top = "0px";
+                    closeButton.style.right = "0px";
+                } else {
+                    mediaPlayer.style.width = "auto";
+                    mediaPlayer.style.height = "auto";
+                    closeButton.style.top = "19px";
+                    closeButton.style.right = "-16px";
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>
