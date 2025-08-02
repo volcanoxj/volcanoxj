@@ -4,8 +4,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>正覺教團 <%= article.title %></title>
-    <link rel="stylesheet" type="text/css" href="../../../index.css" />
-    <script type="text/javascript" src="../../../index.js"></script>
+    <link rel="stylesheet" type="text/css" href="<%= rootdir %>/index.css" />
+    <script type="text/javascript" src="<%= rootdir %>/index.js"></script>
 </head>
 <body class="rows">
     <div class="title">正覺教團</div>
@@ -14,8 +14,8 @@
     <div class="title"><%= article.title %></div>
     <div><%- article.content %></div>
     <div style="background-color: transparent; position: fixed; bottom: 0px; left:0; width:100%;">
-        <% if(article.previous){ %><a href="../../../<%- article.previous.href %>.html" style="float: left; text-decoration: none; color: white; background-color: black;"><span class="tooltip" data-tooltip="<%= article.previous.title%>">上一页</span></a> <%}%>
-        <% if(article.next){ %><a href="../../../<%- article.next.href %>.html" style="float: right; text-decoration: none; color: white; background-color: black;"><span class="tooltip" data-tooltip="<%= article.next.title%>">下一页</span></a> <%}%>
+        <% if(article.previous){ %><a href="<%= rootdir %>/<%- article.previous.href %>.html" style="float: left; text-decoration: none; color: white; background-color: black;"><span class="tooltip" data-tooltip="<%= article.previous.title%>">上一页</span></a> <%}%>
+        <% if(article.next){ %><a href="<%= rootdir %>/<%- article.next.href %>.html" style="float: right; text-decoration: none; color: white; background-color: black;"><span class="tooltip" data-tooltip="<%= article.next.title%>">下一页</span></a> <%}%>
     </div>
 </body>
 </html>
